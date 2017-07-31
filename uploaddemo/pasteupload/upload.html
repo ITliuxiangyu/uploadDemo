@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.css">
+    <script src="../js/jquery-3.1.0.js" type="text/javascript"></script>
+    <title></title>
+</head>
+<body>
+<form role="form" method="post" action="upload.php" enctype="multipart/form-data">
+   <textarea id="picture" row="10" cols="30"></textarea>
+</form>
+<div id="divout"></div>
+<script type="text/javascript">
+    $("#picture").on("paste", function (e) {
+        e.stopPropagation();
+        var self = this;
+        var clipboardData = e.originalEvent.clipboardData;
+
+        if (clipboardData.items.length <= 0) {
+            return;
+        }
+        //Blob
+        var file = clipboardData.items[0].getAsFile();
+        if (!file) {
+            return;
+        }
+        var formData = new FormData();
+        formData.append("file", file);
+       // formData.append("token", $("#token").val());
+        $.ajax({
+            url: "./upload.php",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+        }).done(function (response) {
+            // 根据返回结果指定界面操作
+            $("#divout").html(response);
+        });
+        e.preventDefault();
+    });
+
+</script>
+</body>
+</html>
