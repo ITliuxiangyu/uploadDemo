@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 6.7.1 (453575)"/><meta name="altitude" content="111.5107269287109"/><meta name="author" content="itliuxiangyu@163.com"/><meta name="created" content="2016-12-23 05:30:12 +0000"/><meta name="latitude" content="34.8202795795849"/><meta name="longitude" content="113.5585007052404"/><meta name="source" content="desktop.mac"/><meta name="updated" content="2017-03-28 01:48:20 +0000"/><title>文件上传</title></head><body>
+<div>&lt;?php</div>
+<div>//    var_dump($_FILES);</div>
+<div>//    $file = $_FILES["uploadFile"];</div>
+<div>//    // 上传的文件名</div>
+<div>//    $name = $file["name"];</div>
+<div>//    // 文件类型</div>
+<div>//    $type = $file["type"];</div>
+<div>//    // 文件大小</div>
+<div>//    $size = $file["size"];</div>
+<div>//    // 文件的临时路径</div>
+<div>//    $tmp_path = $file["tmp_name"];</div>
+<div>//</div>
+<div>//    // 获取文件后缀</div>
+<div>//    function get_file_type($filename){</div>
+<div>//        $type = substr($filename, strrpos($filename, ".")+1);</div>
+<div>//        return $type;</div>
+<div>//    }</div>
+<div>//</div>
+<div>//    // 1.拿到时间 (78634534623)</div>
+<div>//    $time = time();</div>
+<div>//    $str = strval($time);</div>
+<div>//    // 2.拿到图片格式 (.jpg)</div>
+<div>//    $fileTyep = get_file_type($name);</div>
+<div>//    // 3. 878235935.jpg</div>
+<div>//    $fullName = $str.".".$fileTyep;</div>
+<div>//    // 4.保存到服务器</div>
+<div>//</div>
+<div>//</div>
+<div>//    // 把临时路径中的文件,保存到服务器</div>
+<div>//    // 1.先判断路径是否存在,如果不存在,创建</div>
+<div>//    $dirPath = "uploadPath/".$fullName;</div>
+<div>//    if(file_exists($dirPath)){</div>
+<div>//        echo "存在";</div>
+<div>//    } else {</div>
+<div>////        echo "路径不存在";</div>
+<div>//        move_uploaded_file($tmp_path, $dirPath);</div>
+<div>//        echo "我把上传过来的资源放到:".$dirPath."下面了,你可以过来看看";</div>
+<div>//    }</div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div>//function get_file_type($filename){</div>
+<div>//        $type = substr($filename, strrpos($filename, ".")+1);</div>
+<div>//        return $type;</div>
+<div>//    }</div>
+<div>//// ftp 上传文件</div>
+<div>//// fiel translation protocal</div>
+<div>//// 准备时间戳名字</div>
+<div>//$time = time();</div>
+<div>//$str = strval($time);</div>
+<div>//// 获取文件格式</div>
+<div>//$fileTyep = get_file_type($_FILES["uploadFile"]["name"]);</div>
+<div>//// 上传到服务器端的名字</div>
+<div>//$serverPathName = $str.".".$fileTyep;</div>
+<div>//// 要上传的文件的名字</div>
+<div>//$localPathName = $_FILES["uploadFile"]["tmp_name"];</div>
+<div>//</div>
+<div>//$ftp_connection = ftp_connect('014.3vftp.com');</div>
+<div>//  ftp_login($ftp_connection, 'hanhui', 'han2748139');</div>
+<div>//  ftp_chdir($ftp_connection, 'css');</div>
+<div>//</div>
+<div>//  $r = ftp_put($ftp_connection, $serverPathName, $localPathName, FTP_BINARY);</div>
+<div>//  var_dump($r);</div>
+<div>//  ftp_close($ftp_connection);</div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div><br/></div>
+<div>    // curl 文件上传</div>
+<div>    $localFilePath = $_FILES["uploadFile"]["tmp_name"];</div>
+<div>    $fileName = $_FILES["uploadFile"]["name"];</div>
+<div>    $fh = fopen($localFilePath, "r");</div>
+<div>    $size = filesize($localFilePath);</div>
+<div>    // 1.初始化请求对象</div>
+<div>    $ch = curl_init();</div>
+<div>    // 2.绑定地址</div>
+<div>    curl_setopt($ch, CURLOPT_URL, "ftp://014.3vftp.com/js/".$fileName);</div>
+<div><br/></div>
+<div>    // 设置请求信息</div>
+<div>    curl_setopt($ch, CURLOPT_HEADER, 0);</div>
+<div>    curl_setopt($ch, CURLOPT_UPLOAD, 1);</div>
+<div>    curl_setopt($ch, CURLOPT_USERPWD, "hanhui:han2748139");</div>
+<div>    curl_setopt($ch, CURLOPT_INFILE, $fh);</div>
+<div>    curl_setopt($ch, CURLOPT_INFILESIZE, $size);</div>
+<div><br/></div>
+<div>    // 3.执行请求</div>
+<div>    $res = curl_exec($ch);</div>
+<div>    // 4.接受结果</div>
+<div>    var_dump($res);</div>
+<div><br/></div>
+<div>?&gt;</div>
+</body></html>
